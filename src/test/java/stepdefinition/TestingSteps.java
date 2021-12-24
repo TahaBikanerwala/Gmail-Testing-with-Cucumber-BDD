@@ -111,9 +111,38 @@ public class TestingSteps {
 	}
 	
 	@When("select an emoji")
-	public void select_an_emoji() {
+	public void select_an_emoji() throws IOException {
 		//Selecting My Fav Emoji
 		driver.findElement(By.xpath("//button[@aria-label='face with tears of joy']")).click();
+		takeScreeenShot("C:\\Users\\taha\\eclipse-workspace\\cucumbergmail\\mailwithemoji.jpg");
+	}
+	
+	@When("click on attachments")
+	public void click_on_attachments() throws IOException, InterruptedException {
+		// Element to click on Google Drive icon
+		driver.findElement(By.xpath("//div[@class='aA7 aaA aMZ']")).click();
+		Thread.sleep(2000);
+		WebElement myframe = driver.findElement(By.xpath("//iframe[@class='KA-JQ']"));			
+		driver.switchTo().frame(myframe);
+		driver.findElement(By.xpath("//div[@class='ge-Di-hc ge-Df-ke']")).click();
+		// Element to click on MyDrive
+		driver.findElement(By.xpath("//div[@class='ge-Bi-Zb-Nj']")).click();
+		driver.findElement(By.xpath("//div[@class='Od-lh-Gf-Q-Ah-pe']")).click();
+		Thread.sleep(2000);
+	}
+	
+	@When("insert attachment")
+	public void insert_attachment() throws IOException, InterruptedException {
+		takeScreeenShot("C:\\Users\\taha\\eclipse-workspace\\cucumbergmail\\mailwithattachment.jpg");
+		driver.findElement(By.xpath("//div[@class='a-b-c d-u d-u-F ge-tb-jf-enabled']")).click();
+		driver.switchTo().parentFrame();
+		driver.findElement(By.xpath("//div[@class='Am Al editable LW-avf tS-tW']")).click();
+		Thread.sleep(2000);
+	}
+	
+	@When("click on delete icon on bottom left")
+	public void click_on_delete_icon_on_bottom_left() throws IOException {
+		driver.findElement(By.xpath("//div[@class='oh J-Z-I J-J5-Ji T-I-ax7']")).click(); 
 	}
 	
 	@Then("user should be able to send the email to the recipient")
@@ -121,9 +150,34 @@ public class TestingSteps {
 		driver.findElement(By.xpath("//div[@class=\'T-I J-J5-Ji aoO v7 T-I-atl L3\']")).click();
 		Thread.sleep(4000);
 	}
+	
+	@Then("user should not be able to send the email to the recipient")
+	public void user_should_not_be_able_to_send_the_email_to_the_recipient() throws InterruptedException, IOException {
+		driver.findElement(By.xpath("//div[@class=\'T-I J-J5-Ji aoO v7 T-I-atl L3\']")).click();
+		takeScreeenShot("C:\\Users\\taha\\eclipse-workspace\\cucumbergmail\\mailnotsent.jpg");
+		String error = driver.findElement(By.xpath("//div[@class=\"Kj-JD-Jz\"]")).getText();
+		Thread.sleep(4000);
+	}
+
+	@Then("error message should be displayed")
+	public void error_message_should_be_displayed() throws InterruptedException, IOException {
+		takeScreeenShot("C:\\Users\\taha\\eclipse-workspace\\cucumbergmail\\mailnotsent.jpg");
+		String error = driver.findElement(By.xpath("//div[@class=\"Kj-JD-Jz\"]")).getText();
+		System.out.println(error);
+		//Element for Ok button on Error Message
+		driver.findElement(By.xpath("//button[@name=\'ok\']")).click();
+		//Close the compose mail block
+		driver.findElement(By.xpath("//img[@class='Ha']")).click();
+		Thread.sleep(4000);
+	}
 
 
-
+	@Then("the draft should be deleted and user should not be able to see it in drafts or anywhere else")
+	public void the_draft_should_be_deleted_and_user_should_not_be_able_to_see_it_in_drafts_or_anywhere_else() throws InterruptedException, IOException {
+		driver.findElement(By.xpath("//div[@class=\"TN bzz aHS-bnq\"]")).click();
+		takeScreeenShot("C:\\Users\\taha\\eclipse-workspace\\cucumbergmail\\mailnotsent.jpg");
+		Thread.sleep(4000);
+	}
 	
 
 }
