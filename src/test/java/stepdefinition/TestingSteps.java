@@ -34,7 +34,7 @@ public class TestingSteps {
 	
 	static WebDriver driver;
 	private String bodyText = "Automation QA test for Incubyte";
-	private String recipient = "tahabikanerwal@gmail.com"; //Edit mail as per required
+	private String recipient = "tahabikanerwal@gmail.com"; //Edit mail as required
 	private String cc = "tahabikanerwal@gmail.com";
 	private String subject = "Incubyte";
 	XSSFWorkbook wb;
