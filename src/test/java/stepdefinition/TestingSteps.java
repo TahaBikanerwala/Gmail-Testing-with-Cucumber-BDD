@@ -44,19 +44,14 @@ public class TestingSteps {
 	
 	public void takeScreeenShot(String filepath) throws IOException {
 		TakesScreenshot screenshot = (TakesScreenshot) driver;
-		
-		File src = screenshot.getScreenshotAs(OutputType.FILE); 
-				
+		File src = screenshot.getScreenshotAs(OutputType.FILE); 	
 		File dest = new File(filepath);
-		
 		FileHandler.copy(src, dest);
 	}
 	
 	public void getExcelData(String filepath) throws IOException {
 		File file = new File(filepath);
-		
 		FileInputStream fis = new FileInputStream(file);
-		
 		 wb = new XSSFWorkbook(fis);
 	}
 	
@@ -77,6 +72,13 @@ public class TestingSteps {
 	
 	@Given("user is logged in to the account")
 	public void user_is_logged_in_to_the_account() throws IOException {
+		/* Since a dummy mail is used sometimes after entering email and password
+		 * It asks for mobile number for verification
+		 * That part is skipped in this code as it requires real mobile number and OTP
+		 * In order to run this code kindly generate a new dummy mail and run the code
+		 * Replace the email and password values in the excel sheet as the values are taken from there
+		 * And you will be good to go
+		 * Thank You!!*/
 		WebElement signinButton = driver.findElement(By.linkText("Sign in"));
 		signinButton.click();
 		getExcelData("C:\\Users\\taha\\eclipse-workspace\\cucumbergmail\\src\\test\\resources\\data.xls");
@@ -106,7 +108,6 @@ public class TestingSteps {
 	
 	@When("fill in Recipient Id")
 	public void fill_in_recipient_id() {
-//		driver.findElement(By.xpath("//div[@class='T-I T-I-KE L3']")).click();
 		driver.findElement(By.xpath("//textarea[@name='to']")).sendKeys(recipient);
 	}
 	
