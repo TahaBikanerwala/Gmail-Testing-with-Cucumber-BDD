@@ -32,7 +32,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.PendingException;
 
-public class TestingSteps {
+public class TestingSteps{
 
 	public static WebDriver driver;
 	private String bodyText = "Automation QA test for Incubyte";
@@ -43,7 +43,6 @@ public class TestingSteps {
 	XSSFSheet sheet;
 	WebElement sendButton;
 	List<WebElement> list;
-	SignInPage sip;
 
 	public void takeScreeenShot(String filepath) throws IOException {
 		TakesScreenshot screenshot = (TakesScreenshot) driver;
@@ -69,7 +68,7 @@ public class TestingSteps {
 	}
 
 	@Then("user should be able to launch Gmail webapp")
-	public SignInPage user_should_be_able_to_launch_gmail_webapp() {
+	public SignInPage user_should_be_able_to_launch_gmail_webapp() throws IOException {
 		driver.get("https://www.google.com/intl/en-GB/gmail/about");
 		return PageFactory.initElements(driver, SignInPage.class);
 	}
@@ -83,10 +82,11 @@ public class TestingSteps {
 		 * Replace the email and password values in the excel sheet as the values are taken from there
 		 * And you will be good to go
 		 * Thank You!!*/
-		//		sip = new SignInPage(driver);
-		WebElement signinButton = driver.findElement(By.linkText("Sign in"));
-		signinButton.click();
-		//		sip.clickOnSignIn();
+				
+//		WebElement signinButton = driver.findElement(By.linkText("Sign in"));
+//		signinButton.click();
+//		sip = new SignInPage(driver);
+		SignInPage.clickOnSignIn();
 		getExcelData(System.getProperty("user.dir")+"\\src\\test\\resources\\data.xls");
 		sheet = wb.getSheetAt(0);
 		String emailId = sheet.getRow(1).getCell(0).getStringCellValue();
@@ -94,14 +94,14 @@ public class TestingSteps {
 		System.out.println(emailId);
 		System.out.println(password);
 
-		driver.findElement(By.id("identifierId")).sendKeys(emailId);
-		driver.findElement(By.cssSelector("#identifierNext > div > button > span")).click();
-		driver.findElement(By.xpath("//input[@name=\'password\']")).sendKeys(password);
-		driver.findElement(By.xpath("//*[@id=\'passwordNext\']/div/button/span")).click();	
-		//		sip.enterEmailId(emailId);
-		//		sip.clickOnEmailNxt();
-		//		sip.enterPassword(password);
-		//		sip.clickOnNextBtn();
+//		driver.findElement(By.id("identifierId")).sendKeys(emailId);
+//		driver.findElement(By.cssSelector("#identifierNext > div > button > span")).click();
+//		driver.findElement(By.xpath("//input[@name=\'password\']")).sendKeys(password);
+//		driver.findElement(By.xpath("//*[@id=\'passwordNext\']/div/button/span")).click();	
+		SignInPage.enterEmailId(emailId);
+		SignInPage.clickOnEmailNxt();
+		SignInPage.enterPassword(password);
+		SignInPage.clickOnNextBtn();
 
 	}
 
